@@ -13,12 +13,12 @@ import com.freeankit.ankitmvvmsample.view.PeopleDetailActivity
 /**
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
  **/
-class ItemPeopleViewModel(private val people: People, private val context: Context) : BaseObservable() {
+class ItemPeopleViewModel(private var people: People, private val context: Context) : BaseObservable() {
 
 
     fun getFullName(): String {
-        people.name = people.name.title + "." + people.name.first + " " + people.name.last
-        return people.name
+        people.fullName = people.name.title + "." + people.name.first + " " + people.name.last
+        return people.fullName
     }
 
     fun getCell(): String {

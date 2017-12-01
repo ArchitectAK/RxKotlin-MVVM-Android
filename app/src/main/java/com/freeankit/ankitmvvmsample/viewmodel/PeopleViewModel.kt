@@ -3,7 +3,6 @@ package com.freeankit.ankitmvvmsample.viewmodel
 import android.content.Context
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.support.annotation.NonNull
 import android.view.View
 import com.freeankit.ankitmvvmsample.PeopleApplication
 import com.freeankit.ankitmvvmsample.R
@@ -11,10 +10,7 @@ import com.freeankit.ankitmvvmsample.data.PeopleFactory
 import com.freeankit.ankitmvvmsample.model.People
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
-import java.util.ArrayList
-import java.util.Observable
+import java.util.*
 
 /**
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
@@ -31,7 +27,7 @@ class PeopleViewModel(private val context: Context) : Observable() {
 
     init {
 
-        this.peopleList = ArrayList<People>()
+        this.peopleList = ArrayList()
         peopleProgress = ObservableInt(View.GONE)
         peopleRecycler = ObservableInt(View.GONE)
         peopleLabel = ObservableInt(View.VISIBLE)
@@ -39,7 +35,7 @@ class PeopleViewModel(private val context: Context) : Observable() {
     }
 
 
-    fun onClickFabLoad(view: View) {
+    fun onClickFabLoad(arg0: View) {
         initializeViews()
         fetchPeopleList()
     }
@@ -51,21 +47,21 @@ class PeopleViewModel(private val context: Context) : Observable() {
         peopleProgress.set(View.VISIBLE)
     }
 
-    fun fetchPeopleList() {
+    private fun fetchPeopleList() {
 
-        val peopleApplication = PeopleApplication.create(context)
+        val peopleApplication = PeopleApplication().create(context)
         val peopleService = peopleApplication.getPeopleService()
 
         val disposable = peopleService.fetchPeople(PeopleFactory.RANDOM_USER_URL)
                 .subscribeOn(peopleApplication.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer<Any> { peopleResponse ->
-                    changePeopleDataSet(peopleResponse.getPeopleList())
+                .subscribe({ peopleResponse ->
+                    changePeopleDataSet(peopleResponse.getPeopleList()!!)
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.GONE)
                     peopleRecycler.set(View.VISIBLE)
-                }, Consumer<Throwable> {
-                    messageLabel.set(context!!.getString(R.string.error_loading_people))
+                }, {
+                    messageLabel.set(context.getString(R.string.error_loading_people))
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.VISIBLE)
                     peopleRecycler.set(View.GONE)

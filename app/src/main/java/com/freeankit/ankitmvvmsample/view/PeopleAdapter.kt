@@ -40,7 +40,7 @@ class PeopleAdapter(private var peopleList: List<People> = emptyList()) : Recycl
             if (mItemPeopleBinding.peopleViewModel == null) {
                 mItemPeopleBinding.peopleViewModel = ItemPeopleViewModel(people, itemView.context)
             } else {
-                mItemPeopleBinding.peopleViewModel.setPeople(people)
+                mItemPeopleBinding.peopleViewModel!!.setPeople(people)
             }
         }
     }

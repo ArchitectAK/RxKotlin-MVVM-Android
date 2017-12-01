@@ -19,12 +19,11 @@ class PeopleApplication : Application() {
         return context.applicationContext as PeopleApplication
     }
 
-    companion object {
-        fun create(context: Context): PeopleApplication {
-            return context as PeopleApplication
-        }
 
+    fun create(context: Context): PeopleApplication {
+        return get(context)
     }
+
 
     fun getPeopleService(): PeopleService {
         if (peopleService == null) {
