@@ -14,7 +14,7 @@ class PeopleFactory {
         val RANDOM_USER_URL = "http://api.randomuser.me/?results=10&nat=en"
 
         val BASE_URL = "http://api.randomuser.me/"
-        val PROJECT_URL = "https://github.com/erikcaffrey/People-MVVM"
+        val PROJECT_URL = "https://github.com/AnkitDroidGit/Ankit_MVVM_Sample"
         fun create(): PeopleService {
             val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
