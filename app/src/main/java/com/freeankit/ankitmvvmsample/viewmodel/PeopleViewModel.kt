@@ -55,8 +55,8 @@ class PeopleViewModel(private val context: Context) : Observable() {
         val disposable = peopleService.fetchPeople(PeopleFactory().RANDOM_USER_URL)
                 .subscribeOn(peopleApplication.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ PeopleResponse ->
-                    changePeopleDataSet(PeopleResponse.getPeopleList()!!)
+                .subscribe({ response ->
+                    changePeopleDataSet(response.peopleList)
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.GONE)
                     peopleRecycler.set(View.VISIBLE)
