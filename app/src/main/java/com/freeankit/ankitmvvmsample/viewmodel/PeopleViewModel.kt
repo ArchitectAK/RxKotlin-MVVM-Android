@@ -52,11 +52,11 @@ class PeopleViewModel(private val context: Context) : Observable() {
         val peopleApplication = PeopleApplication().create(context)
         val peopleService = peopleApplication.getPeopleService()
 
-        val disposable = peopleService.fetchPeople(PeopleFactory.RANDOM_USER_URL)
+        val disposable = peopleService.fetchPeople(PeopleFactory().RANDOM_USER_URL)
                 .subscribeOn(peopleApplication.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ peopleResponse ->
-                    changePeopleDataSet(peopleResponse.getPeopleList()!!)
+                .subscribe({ PeopleResponse ->
+                    changePeopleDataSet(PeopleResponse.getPeopleList()!!)
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.GONE)
                     peopleRecycler.set(View.VISIBLE)
@@ -88,6 +88,5 @@ class PeopleViewModel(private val context: Context) : Observable() {
 
     fun reset() {
         unSubscribeFromObservable()
-
     }
 }

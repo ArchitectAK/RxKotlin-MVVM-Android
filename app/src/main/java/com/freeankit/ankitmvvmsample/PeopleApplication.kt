@@ -27,7 +27,7 @@ class PeopleApplication : Application() {
 
     fun getPeopleService(): PeopleService {
         if (peopleService == null) {
-            peopleService = PeopleFactory.create()
+            peopleService = PeopleFactory().create()
         }
 
         return peopleService as PeopleService

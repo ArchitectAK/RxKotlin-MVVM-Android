@@ -13,8 +13,7 @@ import com.freeankit.ankitmvvmsample.R
 import com.freeankit.ankitmvvmsample.data.PeopleFactory
 import com.freeankit.ankitmvvmsample.databinding.PeopleActivityBinding
 import com.freeankit.ankitmvvmsample.viewmodel.PeopleViewModel
-import java.util.Observable
-import java.util.Observer
+import java.util.*
 
 /**
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
@@ -68,7 +67,7 @@ class PeopleActivity : AppCompatActivity(), Observer {
     }
 
     private fun startActivityActionView() {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PeopleFactory.PROJECT_URL)))
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PeopleFactory().PROJECT_URL)))
     }
 
     override fun update(observable: Observable, data: Any) {
