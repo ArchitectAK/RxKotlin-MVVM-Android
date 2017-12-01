@@ -1,0 +1,65 @@
+ext {
+
+  //Version
+  supportVersion = '27.0.1'
+
+  retrofitVersion = '2.2.0'
+  rxAndroidVersion = '2.0.1'
+  rxJavaVersion  = '2.1.5'
+
+  glideVersion = '3.6.1'
+  circleImageVersion = '1.3.0'
+
+  junitVersion = '4.12'
+  mockitoVersion = '2.8.47'
+
+  //Packages
+  supportPackage = 'com.android.support'
+  retrofitPackage = 'com.squareup.retrofit2'
+
+  reactivePackage = 'io.reactivex.rxjava2'
+
+  glidePackage = 'com.github.bumptech.glide'
+  hdodenhofPackage = 'de.hdodenhof'
+
+
+  junitPackage = 'junit'
+  mockitoPackage = 'org.mockito'
+
+  supportDependencies = [
+
+      design           : buildDependency(supportPackage, 'design', supportVersion),
+      recyclerView     : buildDependency(supportPackage, 'recyclerview-v7', supportVersion),
+      cardView         : buildDependency(supportPackage, 'cardview-v7', supportVersion),
+      appCompat        : buildDependency(supportPackage, 'appcompat-v7', supportVersion)
+  ]
+
+  retrofitDependencies = [
+
+      retrofit     : buildDependency(retrofitPackage, 'retrofit', retrofitVersion),
+      gson         : buildDependency(retrofitPackage, 'converter-gson', retrofitVersion),
+      rxAdapterJava: buildDependency(retrofitPackage, 'adapter-rxjava2', retrofitVersion)
+  ]
+
+  rxDependencies = [
+
+      rxAndroid: buildDependency(reactivePackage, 'rxandroid', rxAndroidVersion),
+      rxJava   : buildDependency(reactivePackage,'rxjava',rxJavaVersion)
+  ]
+
+
+  glide = buildDependency(glidePackage, 'glide', glideVersion)
+  circleImageView = buildDependency(hdodenhofPackage, 'circleimageview', circleImageVersion)
+
+
+  testingDependencies = [
+
+      junit      : buildDependency(junitPackage, 'junit', junitVersion),
+      mockito    : buildDependency(mockitoPackage, 'mockito-core', mockitoVersion)
+
+  ]
+}
+
+static String buildDependency(String pack, String dependency, String version) {
+  return "${pack}:${dependency}:${version}"
+}
