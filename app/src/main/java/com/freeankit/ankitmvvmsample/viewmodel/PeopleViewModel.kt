@@ -65,7 +65,7 @@ class PeopleViewModel(private val context: Context) : Observable() {
                     }
                 })
 
-        compositeDisposable!!.add(disposable)
+        compositeDisposable?.add(disposable)
     }
 
     private fun changePeopleDataSet(peoples: List<People>) {
