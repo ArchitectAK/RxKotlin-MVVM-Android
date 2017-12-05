@@ -14,16 +14,16 @@ class PeopleDetailViewModel(private val people: People) {
 
 
     fun getFullUserName(): String {
-        people.fullName = people.name.title + "." + people.name.first + " " + people.name.last
-        return people.fullName
+        people.fullName = people.name?.title + "." + people.name?.first + " " + people.name?.last
+        return people.fullName!!
     }
 
     fun getUserName(): String {
-        return people.login.username
+        return people.login?.username!!
     }
 
     fun getEmail(): String {
-        return people.email
+        return people.email!!
     }
 
     fun getEmailVisibility(): Int {
@@ -31,23 +31,23 @@ class PeopleDetailViewModel(private val people: People) {
     }
 
     fun getCell(): String {
-        return people.cell
+        return people.cell!!
     }
 
     fun getPictureProfile(): String {
-        return people.picture.large
+        return people.picture?.large!!
     }
 
     fun getAddress(): String {
-        return (people.location.street
+        return (people.location?.street
                 + " "
-                + people.location.city
+                + people.location?.city
                 + " "
-                + people.location.state)
+                + people.location?.state)
     }
 
     fun getGender(): String {
-        return people.gender
+        return people.gender!!
     }
 
     @BindingAdapter("imageUrl")

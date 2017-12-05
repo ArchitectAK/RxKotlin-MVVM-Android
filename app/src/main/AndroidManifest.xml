@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.freeankit.ankitmvvmsample">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".PeopleApplication"
         android:allowBackup="true"
@@ -9,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
 
         <activity
             android:name=".view.PeopleActivity"
@@ -23,7 +25,7 @@
         <activity
             android:name=".view.PeopleDetailActivity"
             android:parentActivityName=".view.PeopleActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

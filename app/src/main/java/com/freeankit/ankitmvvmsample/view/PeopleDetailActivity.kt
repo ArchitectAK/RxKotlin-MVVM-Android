@@ -45,6 +45,6 @@ class PeopleDetailActivity : AppCompatActivity() {
         val people = intent.getSerializableExtra(EXTRA_PEOPLE) as People
         val peopleDetailViewModel = PeopleDetailViewModel(people)
         peopleDetailActivityBinding?.peopleDetailViewModel = peopleDetailViewModel
-        title = people.name.title + "." + people.name.first + " " + people.name.last
+        title = people.name?.title + "." + people.name?.first + " " + people.name?.last
     }
 }

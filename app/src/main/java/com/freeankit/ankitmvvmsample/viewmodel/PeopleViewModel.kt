@@ -3,6 +3,7 @@ package com.freeankit.ankitmvvmsample.viewmodel
 import android.content.Context
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.util.Log
 import android.view.View
 import com.freeankit.ankitmvvmsample.PeopleApplication
 import com.freeankit.ankitmvvmsample.R
@@ -10,6 +11,7 @@ import com.freeankit.ankitmvvmsample.data.PeopleFactory
 import com.freeankit.ankitmvvmsample.model.People
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -54,17 +56,23 @@ class PeopleViewModel(private val context: Context) : Observable() {
 
         val disposable = peopleService.fetchPeople(PeopleFactory().RANDOM_USER_URL)
                 .subscribeOn(peopleApplication.subscribeScheduler())
+//                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    changePeopleDataSet(response.peopleList)
-                    peopleProgress.set(View.GONE)
-                    peopleLabel.set(View.GONE)
-                    peopleRecycler.set(View.VISIBLE)
-                }, {
-                    messageLabel.set(context.getString(R.string.error_loading_people))
-                    peopleProgress.set(View.GONE)
-                    peopleLabel.set(View.VISIBLE)
-                    peopleRecycler.set(View.GONE)
+                    kotlin.run {
+                        changePeopleDataSet(response.peopleList)
+                        peopleProgress.set(View.GONE)
+                        peopleLabel.set(View.GONE)
+                        peopleRecycler.set(View.VISIBLE)
+                    }
+                }, { error ->
+                    kotlin.run {
+                        messageLabel.set(context.getString(R.string.error_loading_people))
+                        peopleProgress.set(View.GONE)
+                        peopleLabel.set(View.VISIBLE)
+                        peopleRecycler.set(View.GONE)
+                        Log.d("EJP", error.message)
+                    }
                 })
 
         compositeDisposable!!.add(disposable)
