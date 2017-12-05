@@ -11,7 +11,6 @@ import com.freeankit.ankitmvvmsample.data.PeopleFactory
 import com.freeankit.ankitmvvmsample.model.People
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -19,22 +18,13 @@ import java.util.*
  **/
 class PeopleViewModel(private val context: Context) : Observable() {
 
-    var peopleProgress: ObservableInt
-    var peopleRecycler: ObservableInt
-    var peopleLabel: ObservableInt
-    var messageLabel: ObservableField<String>
+    var peopleProgress: ObservableInt = ObservableInt(View.GONE)
+    var peopleRecycler: ObservableInt = ObservableInt(View.GONE)
+    var peopleLabel: ObservableInt = ObservableInt(View.VISIBLE)
+    var messageLabel: ObservableField<String> = ObservableField(context.getString(R.string.default_loading_people))
 
-    private val peopleList: MutableList<People>
+    private val peopleList: MutableList<People> = ArrayList()
     private var compositeDisposable: CompositeDisposable? = CompositeDisposable()
-
-    init {
-
-        this.peopleList = ArrayList()
-        peopleProgress = ObservableInt(View.GONE)
-        peopleRecycler = ObservableInt(View.GONE)
-        peopleLabel = ObservableInt(View.VISIBLE)
-        messageLabel = ObservableField(context.getString(R.string.default_loading_people))
-    }
 
 
     fun onClickFabLoad(arg0: View) {
@@ -60,7 +50,7 @@ class PeopleViewModel(private val context: Context) : Observable() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     kotlin.run {
-                        changePeopleDataSet(response.peopleList)
+                        changePeopleDataSet(response.results)
                         peopleProgress.set(View.GONE)
                         peopleLabel.set(View.GONE)
                         peopleRecycler.set(View.VISIBLE)

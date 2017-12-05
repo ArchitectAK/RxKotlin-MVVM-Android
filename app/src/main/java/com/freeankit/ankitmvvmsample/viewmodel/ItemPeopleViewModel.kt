@@ -17,20 +17,20 @@ class ItemPeopleViewModel(private var people: People, private val context: Conte
 
 
     fun getFullName(): String {
-        people.fullName = people.name?.title + "." + people.name?.first + " " + people.name?.last
+        people.fullName = people.name.title + "." + people.name.first + " " + people.name.last
         return people.fullName!!
     }
 
     fun getCell(): String {
-        return people.cell!!
+        return people.cell
     }
 
     fun getMail(): String {
-        return people.email!!
+        return people.email
     }
 
     fun getPictureProfile(): String {
-        return people.picture?.medium!!
+        return people.picture.medium
     }
 
     @BindingAdapter("imageUrl")
