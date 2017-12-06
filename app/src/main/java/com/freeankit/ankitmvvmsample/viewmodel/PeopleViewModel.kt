@@ -13,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
+
 /**
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
  **/
@@ -39,6 +40,36 @@ class PeopleViewModel(private val context: Context) : Observable() {
         peopleProgress.set(View.VISIBLE)
     }
 
+//    private fun fetchPeopleList() {
+//
+//        val peopleApplication = PeopleApplication().create(context)
+//        val peopleService = peopleApplication.getPeopleService()
+//
+//        val disposable = peopleService.fetchPeople(PeopleFactory().RANDOM_USER_URL)
+//                .subscribeOn(peopleApplication.subscribeScheduler())
+////                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ response ->
+//                    kotlin.run {
+//                        changePeopleDataSet(response.results)
+//                        peopleProgress.set(View.GONE)
+//                        peopleLabel.set(View.GONE)
+//                        peopleRecycler.set(View.VISIBLE)
+//                    }
+//                }, { error ->
+//                    kotlin.run {
+//                        messageLabel.set(context.getString(R.string.error_loading_people))
+//                        peopleProgress.set(View.GONE)
+//                        peopleLabel.set(View.VISIBLE)
+//                        peopleRecycler.set(View.GONE)
+//                        Log.d("EJP", error.message)
+//                    }
+//                })
+//
+//        compositeDisposable?.add(disposable)
+//    }
+
+
     private fun fetchPeopleList() {
 
         val peopleApplication = PeopleApplication().create(context)
@@ -46,29 +77,25 @@ class PeopleViewModel(private val context: Context) : Observable() {
 
         val disposable = peopleService.fetchPeople(PeopleFactory().RANDOM_USER_URL)
                 .subscribeOn(peopleApplication.subscribeScheduler())
-//                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    kotlin.run {
-                        changePeopleDataSet(response.results)
-                        peopleProgress.set(View.GONE)
-                        peopleLabel.set(View.GONE)
-                        peopleRecycler.set(View.VISIBLE)
-                    }
-                }, { error ->
-                    kotlin.run {
-                        messageLabel.set(context.getString(R.string.error_loading_people))
-                        peopleProgress.set(View.GONE)
-                        peopleLabel.set(View.VISIBLE)
-                        peopleRecycler.set(View.GONE)
-                        Log.d("EJP", error.message)
-                    }
+                .subscribe({ peopleResponse ->
+                    Log.d("SJP", peopleResponse.results.toString())
+                    peopleProgress.set(View.GONE)
+                    peopleLabel.set(View.GONE)
+                    peopleRecycler.set(View.VISIBLE)
+                    changePeopleDataSet(peopleResponse.results.toMutableList())
+                }, { throwable ->
+                    messageLabel.set(context.getString(R.string.error_loading_people))
+                    peopleProgress.set(View.GONE)
+                    peopleLabel.set(View.VISIBLE)
+                    peopleRecycler.set(View.GONE)
+                    Log.d("EJP", throwable.message)
                 })
 
         compositeDisposable?.add(disposable)
     }
 
-    private fun changePeopleDataSet(peoples: List<People>) {
+    private fun changePeopleDataSet(peoples: MutableList<People>) {
         peopleList.addAll(peoples)
         setChanged()
         notifyObservers()
@@ -86,5 +113,6 @@ class PeopleViewModel(private val context: Context) : Observable() {
 
     fun reset() {
         unSubscribeFromObservable()
+        compositeDisposable = null
     }
 }

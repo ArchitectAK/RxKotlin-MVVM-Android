@@ -35,22 +35,22 @@ class PeopleActivity : AppCompatActivity(), Observer {
     private fun initDataBinding() {
         peopleActivityBinding = DataBindingUtil.setContentView(this, R.layout.people_activity)
         peopleViewModel = PeopleViewModel(this)
-        peopleActivityBinding!!.mainViewModel = peopleViewModel
+        peopleActivityBinding?.mainViewModel = peopleViewModel
     }
 
     private fun setupListPeopleView(listPeople: RecyclerView) {
         val adapter = PeopleAdapter()
         listPeople.adapter = adapter
-        listPeople.layoutManager = LinearLayoutManager(this)
+        listPeople.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
     }
 
-    fun setupObserver(observable: Observable?) {
-        observable!!.addObserver(this)
+    private fun setupObserver(observable: Observable?) {
+        observable?.addObserver(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        peopleViewModel!!.reset()
+        peopleViewModel?.reset()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,7 +72,8 @@ class PeopleActivity : AppCompatActivity(), Observer {
 
     override fun update(observable: Observable, data: Any) {
         if (observable is PeopleViewModel) {
-            val peopleAdapter = peopleActivityBinding!!.listPeople.adapter as PeopleAdapter
+            peopleActivityBinding?.listPeople?.background = resources.getDrawable(android.R.color.holo_red_dark)
+            val peopleAdapter = peopleActivityBinding?.listPeople?.adapter as PeopleAdapter
             peopleAdapter.setPeopleList(observable.getPeopleList())
         }
     }

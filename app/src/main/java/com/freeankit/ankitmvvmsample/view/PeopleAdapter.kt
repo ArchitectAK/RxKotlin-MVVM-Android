@@ -13,7 +13,7 @@ import com.freeankit.ankitmvvmsample.viewmodel.ItemPeopleViewModel
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
  **/
 class PeopleAdapter(private var peopleList: List<People> = emptyList()) : RecyclerView.Adapter<PeopleAdapter.PeopleAdapterViewHolder>() {
-    
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleAdapterViewHolder {
         val itemPeopleBinding: ItemPeopleBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_people,
@@ -40,7 +40,7 @@ class PeopleAdapter(private var peopleList: List<People> = emptyList()) : Recycl
             if (mItemPeopleBinding.peopleViewModel == null) {
                 mItemPeopleBinding.peopleViewModel = ItemPeopleViewModel(people, itemView.context)
             } else {
-                mItemPeopleBinding.peopleViewModel!!.setPeople(people)
+                mItemPeopleBinding.peopleViewModel?.setPeople(people)
             }
         }
     }

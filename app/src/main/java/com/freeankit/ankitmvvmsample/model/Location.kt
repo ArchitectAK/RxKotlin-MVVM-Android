@@ -6,4 +6,4 @@ package com.freeankit.ankitmvvmsample.model
 data class Location(var street: String,
                     var city: String,
                     var state: String,
-                    var postcode: String)
+                    var postcode: Any)
