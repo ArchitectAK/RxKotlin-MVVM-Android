@@ -27,8 +27,8 @@ class PeopleActivity : AppCompatActivity(), Observer {
         super.onCreate(savedInstanceState)
 
         initDataBinding()
-        setSupportActionBar(peopleActivityBinding!!.toolbar)
-        setupListPeopleView(peopleActivityBinding!!.listPeople)
+        setSupportActionBar(peopleActivityBinding?.toolbar)
+        setupListPeopleView(peopleActivityBinding?.listPeople!!)
         setupObserver(peopleViewModel)
     }
 
