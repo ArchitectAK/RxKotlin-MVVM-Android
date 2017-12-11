@@ -3,6 +3,13 @@ Android MVVM Architecture with Kotlin and RxAndroid
 Working on this.... coming soon
 
 
+### Contact - Let's connect to each other
+- [Twitter](https://twitter.com/KumarAnkitRKE)
+- [Github](https://github.com/AnkitDroidGit)
+- [LinkedIn](https://www.linkedin.com/in/kumarankitkumar/)
+- [Facebook](https://www.facebook.com/freeankit)
+- [Slack](https://ankitdroid.slack.com)
+
 
 ### License
 
