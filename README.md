@@ -1,4 +1,4 @@
-# Ankit_MVVM_Sample
+# Android-RxKotlin-MVVM-Architecure-Sample
 Android MVVM Architecture with Kotlin and RxAndroid
 
 
