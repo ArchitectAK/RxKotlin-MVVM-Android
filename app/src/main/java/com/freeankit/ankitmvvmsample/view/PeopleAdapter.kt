@@ -29,8 +29,8 @@ class PeopleAdapter(private var peopleList: List<People> = emptyList()) : Recycl
         return peopleList.size
     }
 
-    fun setPeopleList(peopleList: List<People>) {
-        this.peopleList = peopleList
+    fun setPeopleList(peopleList: List<People>?) {
+        this.peopleList = peopleList!!
         notifyDataSetChanged()
     }
 

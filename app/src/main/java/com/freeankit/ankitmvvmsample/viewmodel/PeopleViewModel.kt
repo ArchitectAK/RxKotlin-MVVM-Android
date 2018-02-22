@@ -24,7 +24,7 @@ class PeopleViewModel(private val context: Context) : Observable() {
     var peopleLabel: ObservableInt = ObservableInt(View.VISIBLE)
     var messageLabel: ObservableField<String> = ObservableField(context.getString(R.string.default_loading_people))
 
-    private val peopleList: MutableList<People> = ArrayList()
+    private var peopleList: List<People> = ArrayList()
     private var compositeDisposable: CompositeDisposable? = CompositeDisposable()
 
 
@@ -79,24 +79,24 @@ class PeopleViewModel(private val context: Context) : Observable() {
                 .subscribeOn(peopleApplication.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ peopleResponse ->
-                    Log.d("SJP", peopleResponse.results.toString())
+                    Log.d("Response", peopleResponse.results.toString())
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.GONE)
                     peopleRecycler.set(View.VISIBLE)
-                    changePeopleDataSet(peopleResponse.results.toMutableList())
+                    changePeopleDataSet(peopleResponse.results)
                 }, { throwable ->
                     messageLabel.set(context.getString(R.string.error_loading_people))
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.VISIBLE)
                     peopleRecycler.set(View.GONE)
-                    Log.d("EJP", throwable.message)
+                    Log.e("Error", throwable.message)
                 })
 
         compositeDisposable?.add(disposable)
     }
 
-    private fun changePeopleDataSet(peoples: MutableList<People>) {
-        peopleList.addAll(peoples)
+    private fun changePeopleDataSet(peoples: List<People>) {
+        peopleList = peoples
         setChanged()
         notifyObservers()
     }
