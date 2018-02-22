@@ -11,7 +11,8 @@ import com.freeankit.ankitmvvmsample.data.PeopleFactory
 import com.freeankit.ankitmvvmsample.model.People
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import java.util.*
+import java.util.Observable
+import kotlin.collections.ArrayList
 
 
 /**
@@ -40,35 +41,35 @@ class PeopleViewModel(private val context: Context) : Observable() {
         peopleProgress.set(View.VISIBLE)
     }
 
-//    private fun fetchPeopleList() {
+
+//    fun fetchPeopleList() {
 //
 //        val peopleApplication = PeopleApplication().create(context)
 //        val peopleService = peopleApplication.getPeopleService()
 //
 //        val disposable = peopleService.fetchPeople(PeopleFactory().RANDOM_USER_URL)
 //                .subscribeOn(peopleApplication.subscribeScheduler())
-////                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({ response ->
-//                    kotlin.run {
-//                        changePeopleDataSet(response.results)
+//                .subscribe(object : Consumer<PeopleResponse> {
+//                    @Throws(Exception::class)
+//                    override fun accept(peopleResponse: PeopleResponse) {
+//                        changePeopleDataSet(peopleResponse.results)
 //                        peopleProgress.set(View.GONE)
 //                        peopleLabel.set(View.GONE)
 //                        peopleRecycler.set(View.VISIBLE)
 //                    }
-//                }, { error ->
-//                    kotlin.run {
+//                }, object : Consumer<Throwable> {
+//                    @Throws(Exception::class)
+//                    override fun accept(throwable: Throwable) {
 //                        messageLabel.set(context.getString(R.string.error_loading_people))
 //                        peopleProgress.set(View.GONE)
 //                        peopleLabel.set(View.VISIBLE)
 //                        peopleRecycler.set(View.GONE)
-//                        Log.d("EJP", error.message)
 //                    }
 //                })
 //
 //        compositeDisposable?.add(disposable)
 //    }
-
 
     private fun fetchPeopleList() {
 
@@ -79,17 +80,18 @@ class PeopleViewModel(private val context: Context) : Observable() {
                 .subscribeOn(peopleApplication.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ peopleResponse ->
-                    Log.d("Response", peopleResponse.results.toString())
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.GONE)
                     peopleRecycler.set(View.VISIBLE)
+                    Log.d("Response", peopleResponse.results.toString())
                     changePeopleDataSet(peopleResponse.results)
-                }, { throwable ->
-                    messageLabel.set(context.getString(R.string.error_loading_people))
+                }, { error ->
+                    messageLabel.set(error.message)
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.VISIBLE)
                     peopleRecycler.set(View.GONE)
-                    Log.e("Error", throwable.message)
+                    Log.e("Error", error.message)
+                    error.printStackTrace()
                 })
 
         compositeDisposable?.add(disposable)

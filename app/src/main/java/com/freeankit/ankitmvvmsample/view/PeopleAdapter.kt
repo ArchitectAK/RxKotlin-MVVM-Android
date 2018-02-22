@@ -12,12 +12,15 @@ import com.freeankit.ankitmvvmsample.viewmodel.ItemPeopleViewModel
 /**
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
  **/
-class PeopleAdapter(private var peopleList: List<People> = emptyList()) : RecyclerView.Adapter<PeopleAdapter.PeopleAdapterViewHolder>() {
+class PeopleAdapter(private var peopleList: List<People>) : RecyclerView.Adapter<PeopleAdapter.PeopleAdapterViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleAdapterViewHolder {
-        val itemPeopleBinding: ItemPeopleBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_people,
-                parent, false)
+        val itemPeopleBinding: ItemPeopleBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_people,
+                parent,
+                false)
         return PeopleAdapterViewHolder(itemPeopleBinding)
     }
 
@@ -29,6 +32,7 @@ class PeopleAdapter(private var peopleList: List<People> = emptyList()) : Recycl
         return peopleList.size
     }
 
+
     fun setPeopleList(peopleList: List<People>?) {
         this.peopleList = peopleList!!
         notifyDataSetChanged()
@@ -36,7 +40,7 @@ class PeopleAdapter(private var peopleList: List<People> = emptyList()) : Recycl
 
     class PeopleAdapterViewHolder(private var mItemPeopleBinding: ItemPeopleBinding) : RecyclerView.ViewHolder(mItemPeopleBinding.itemPeople) {
 
-        internal fun bindPeople(people: People) {
+        fun bindPeople(people: People) {
             if (mItemPeopleBinding.peopleViewModel == null) {
                 mItemPeopleBinding.peopleViewModel = ItemPeopleViewModel(people, itemView.context)
             } else {
@@ -44,4 +48,6 @@ class PeopleAdapter(private var peopleList: List<People> = emptyList()) : Recycl
             }
         }
     }
+
+
 }

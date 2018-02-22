@@ -11,7 +11,6 @@ class PeopleFactory {
 
 
     val RANDOM_USER_URL = "http://api.randomuser.me/?results=10&nat=en"
-        //    val RANDOM_USER_URL = "?results=10&nat=en"
 
     private val BASE_URL = "http://api.randomuser.me/"
     val PROJECT_URL = "https://github.com/AnkitDroidGit/Ankit_MVVM_Sample"
