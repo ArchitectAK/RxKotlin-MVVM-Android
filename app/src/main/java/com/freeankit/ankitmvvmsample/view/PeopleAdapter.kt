@@ -48,6 +48,4 @@ class PeopleAdapter(private var peopleList: List<People>) : RecyclerView.Adapter
             }
         }
     }
-
-
 }
