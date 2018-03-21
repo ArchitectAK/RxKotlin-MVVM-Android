@@ -11,7 +11,8 @@ import com.freeankit.ankitmvvmsample.data.PeopleFactory
 import com.freeankit.ankitmvvmsample.model.People
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import java.util.*
+import java.util.Observable
+import kotlin.collections.ArrayList
 
 
 /**
@@ -24,7 +25,7 @@ class PeopleViewModelKotlin(private val context: Context) : Observable() {
     var peopleLabel: ObservableInt = ObservableInt(View.VISIBLE)
     var messageLabel: ObservableField<String> = ObservableField(context.getString(R.string.default_loading_people))
 
-    private val peopleList: MutableList<People> = ArrayList()
+    private var peopleList: List<People> = ArrayList()
     private var compositeDisposable: CompositeDisposable? = CompositeDisposable()
 
 
@@ -40,35 +41,35 @@ class PeopleViewModelKotlin(private val context: Context) : Observable() {
         peopleProgress.set(View.VISIBLE)
     }
 
-//    private fun fetchPeopleList() {
+
+//    fun fetchPeopleList() {
 //
 //        val peopleApplication = PeopleApplication().create(context)
 //        val peopleService = peopleApplication.getPeopleService()
 //
 //        val disposable = peopleService.fetchPeople(PeopleFactory().RANDOM_USER_URL)
 //                .subscribeOn(peopleApplication.subscribeScheduler())
-////                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({ response ->
-//                    kotlin.run {
-//                        changePeopleDataSet(response.results)
+//                .subscribe(object : Consumer<PeopleResponse> {
+//                    @Throws(Exception::class)
+//                    override fun accept(peopleResponse: PeopleResponse) {
+//                        changePeopleDataSet(peopleResponse.results)
 //                        peopleProgress.set(View.GONE)
 //                        peopleLabel.set(View.GONE)
 //                        peopleRecycler.set(View.VISIBLE)
 //                    }
-//                }, { error ->
-//                    kotlin.run {
+//                }, object : Consumer<Throwable> {
+//                    @Throws(Exception::class)
+//                    override fun accept(throwable: Throwable) {
 //                        messageLabel.set(context.getString(R.string.error_loading_people))
 //                        peopleProgress.set(View.GONE)
 //                        peopleLabel.set(View.VISIBLE)
 //                        peopleRecycler.set(View.GONE)
-//                        Log.d("EJP", error.message)
 //                    }
 //                })
 //
 //        compositeDisposable?.add(disposable)
 //    }
-
 
     private fun fetchPeopleList() {
 
@@ -79,24 +80,25 @@ class PeopleViewModelKotlin(private val context: Context) : Observable() {
                 .subscribeOn(peopleApplication.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ peopleResponse ->
-                    Log.d("SJP", peopleResponse.results.toString())
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.GONE)
                     peopleRecycler.set(View.VISIBLE)
-                    changePeopleDataSet(peopleResponse.results.toMutableList())
-                }, { throwable ->
-                    messageLabel.set(context.getString(R.string.error_loading_people))
+                    Log.d("Response", peopleResponse.results.toString())
+                    changePeopleDataSet(peopleResponse.results)
+                }, { error ->
+                    messageLabel.set(error.message)
                     peopleProgress.set(View.GONE)
                     peopleLabel.set(View.VISIBLE)
                     peopleRecycler.set(View.GONE)
-                    Log.d("EJP", throwable.message)
+                    Log.e("Error", error.message)
+                    error.printStackTrace()
                 })
 
         compositeDisposable?.add(disposable)
     }
 
-    private fun changePeopleDataSet(peoples: MutableList<People>) {
-        peopleList.addAll(peoples)
+    private fun changePeopleDataSet(peoples: List<People>) {
+        peopleList = peoples
         setChanged()
         notifyObservers()
     }

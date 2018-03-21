@@ -19,38 +19,47 @@ import java.util.*
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
  **/
 class PeopleActivity : AppCompatActivity(), Observer {
+    override fun update(observable: Observable?, arg: Any?) {
+        if (observable is PeopleViewModel) {
+            peopleActivityBinding.listPeople.background = resources.getDrawable(android.R.color.holo_red_dark)
+            val peopleAdapter = peopleActivityBinding.listPeople.adapter as PeopleAdapter
+            peopleAdapter.setPeopleList(observable.getPeopleList())
+        }
+    }
 
-    private var peopleActivityBinding: PeopleActivityBinding? = null
-    private var peopleViewModel: PeopleViewModel? = null
+    private lateinit var peopleActivityBinding: PeopleActivityBinding
+    private lateinit var peopleViewModel: PeopleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initDataBinding()
-        setSupportActionBar(peopleActivityBinding?.toolbar)
-        setupListPeopleView(peopleActivityBinding?.listPeople!!)
-        setupObserver(peopleViewModel)
+
     }
 
     private fun initDataBinding() {
         peopleActivityBinding = DataBindingUtil.setContentView(this, R.layout.people_activity)
         peopleViewModel = PeopleViewModel(this)
-        peopleActivityBinding?.mainViewModel = peopleViewModel
+        peopleActivityBinding.mainViewModel = peopleViewModel
+
+        setSupportActionBar(peopleActivityBinding.toolbar)
+        setupListPeopleView(peopleActivityBinding.listPeople)
+        setupObserver(peopleViewModel)
     }
 
     private fun setupListPeopleView(listPeople: RecyclerView) {
-        val adapter = PeopleAdapter()
+        val adapter = PeopleAdapter(peopleList = emptyList())
         listPeople.adapter = adapter
-        listPeople.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+        listPeople.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun setupObserver(observable: Observable?) {
-        observable?.addObserver(this)
+    private fun setupObserver(observable: Observable) {
+        observable.addObserver(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        peopleViewModel?.reset()
+        peopleViewModel.reset()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -68,14 +77,6 @@ class PeopleActivity : AppCompatActivity(), Observer {
 
     private fun startActivityActionView() {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PeopleFactory().PROJECT_URL)))
-    }
-
-    override fun update(observable: Observable, data: Any) {
-        if (observable is PeopleViewModel) {
-            peopleActivityBinding?.listPeople?.background = resources.getDrawable(android.R.color.holo_red_dark)
-            val peopleAdapter = peopleActivityBinding?.listPeople?.adapter as PeopleAdapter
-            peopleAdapter.setPeopleList(observable.getPeopleList())
-        }
     }
 
 }
