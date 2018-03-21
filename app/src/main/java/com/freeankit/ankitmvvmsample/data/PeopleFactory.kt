@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class PeopleFactory {
 
 
-    val RANDOM_USER_URL = "http://api.randomuser.me/?results=10&nat=en"
+    public val RANDOM_USER_URL = "http://api.randomuser.me/?results=10&nat=en"
 //    val RANDOM_USER_URL = "?results=10&nat=en"
 
     private val BASE_URL = "http://api.randomuser.me/"

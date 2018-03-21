@@ -17,7 +17,7 @@ import java.util.*
 /**
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
  **/
-class PeopleViewModel(private val context: Context) : Observable() {
+class PeopleViewModelKotlin(private val context: Context) : Observable() {
 
     var peopleProgress: ObservableInt = ObservableInt(View.GONE)
     var peopleRecycler: ObservableInt = ObservableInt(View.GONE)
