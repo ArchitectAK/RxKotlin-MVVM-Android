@@ -1,5 +1,6 @@
 package com.freeankit.ankitmvvmsample.view
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,12 +13,12 @@ import com.freeankit.ankitmvvmsample.viewmodel.ItemPeopleViewModel
 /**
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
  **/
-class PeopleAdapter(private var peopleList: List<People>) : RecyclerView.Adapter<PeopleAdapter.PeopleAdapterViewHolder>() {
+class PeopleAdapter(private val context: Context, private var peopleList: List<People> = emptyList()) : RecyclerView.Adapter<PeopleAdapter.PeopleAdapterViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleAdapterViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleAdapterViewHolder? {
         val itemPeopleBinding: ItemPeopleBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
+                LayoutInflater.from(context),
                 R.layout.item_people,
                 parent,
                 false)
@@ -38,7 +39,7 @@ class PeopleAdapter(private var peopleList: List<People>) : RecyclerView.Adapter
         notifyDataSetChanged()
     }
 
-    class PeopleAdapterViewHolder(private var mItemPeopleBinding: ItemPeopleBinding) : RecyclerView.ViewHolder(mItemPeopleBinding.itemPeople) {
+    class PeopleAdapterViewHolder constructor(private var mItemPeopleBinding: ItemPeopleBinding) : RecyclerView.ViewHolder(mItemPeopleBinding.itemPeople) {
 
         fun bindPeople(people: People) {
             if (mItemPeopleBinding.peopleViewModel == null) {

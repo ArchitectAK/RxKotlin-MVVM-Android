@@ -48,7 +48,7 @@ class PeopleActivity : AppCompatActivity(), Observer {
     }
 
     private fun setupListPeopleView(listPeople: RecyclerView) {
-        val adapter = PeopleAdapter(peopleList = emptyList())
+        val adapter = PeopleAdapter(this, peopleList = emptyList())
         listPeople.adapter = adapter
         listPeople.layoutManager = LinearLayoutManager(this)
     }

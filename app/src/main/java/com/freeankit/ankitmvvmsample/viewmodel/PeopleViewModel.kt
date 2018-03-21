@@ -18,7 +18,7 @@ import kotlin.collections.ArrayList
 /**
  *@author by Ankit Kumar (ankitdroiddeveloper@gmail.com) on 12/1/17 (MM/DD/YYYY )
  **/
-class PeopleViewModelKotlin(private val context: Context) : Observable() {
+class PeopleViewModel(private val context: Context) : Observable() {
 
     var peopleProgress: ObservableInt = ObservableInt(View.GONE)
     var peopleRecycler: ObservableInt = ObservableInt(View.GONE)
